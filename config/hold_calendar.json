@@ -1,0 +1,11 @@
+{
+  "date_source": "order_funds_available_at",
+  "fallback_days": null,
+  "missing_date_policy": "show_unknown_separately",
+  "amount_source": "seller_net_receivable",
+  "missing_amount_policy": "exclude_from_total_and_show_incomplete",
+  "group_by": ["availability_date", "currency"],
+  "meaning": "funds_become_available_not_actual_withdrawal",
+  "source_timezone": null,
+  "api_field_mapping_verified": false
+}

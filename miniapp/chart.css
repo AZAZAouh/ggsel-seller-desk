@@ -1,0 +1,187 @@
+.chart-panel {
+  background: radial-gradient(280px 150px at 88% 0%, rgba(176, 143, 208, 0.09), transparent 75%), var(--surface-1);
+}
+
+.sales-heading, .heatmap-heading {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.sales-modes {
+  display: inline-flex;
+  padding: 3px;
+  background: #08080a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 32px;
+  align-items: center;
+}
+.sales-modes button {
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid transparent;
+}
+.sales-modes button svg { width: 13px; height: 13px; }
+.sales-modes button:hover { color: var(--text-secondary); }
+.sales-modes button[aria-pressed="true"] {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--border-strong);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.real-chart {
+  padding: 12px 18px 16px;
+}
+
+.sales-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 12px;
+}
+.sales-summary-main span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+.sales-summary-main strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.sales-summary-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.sales-canvas { position: relative; }
+.sales-canvas svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.sales-tooltip, .heatmap-tooltip {
+  position: absolute;
+  top: 6px;
+  background: rgba(25, 24, 32, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  padding: 8px 11px;
+  z-index: 5;
+  min-width: 148px;
+}
+.sales-tooltip span, .heatmap-tooltip span {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+.sales-tooltip strong, .heatmap-tooltip strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.sales-tooltip em, .heatmap-tooltip em {
+  display: block;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--lavender);
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sales-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-empty {
+  padding: 44px 12px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.chart-hit { cursor: crosshair; }
+.chart-hit:focus-visible { outline: 1px solid var(--lavender); }
+
+/* Orca-style Purple Activity Matrix */
+.heatmap-wrap {
+  padding: 12px 18px 16px;
+  position: relative;
+}
+.heatmap-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.heat-cell {
+  cursor: pointer;
+  transition: stroke .12s, filter .12s;
+}
+.heat-cell:hover {
+  stroke: #f2f0f5;
+  stroke-width: 1.2;
+  filter: brightness(1.18);
+}
+.heatmap-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+.heatmap-insights { display: flex; gap: 12px; flex-wrap: wrap; }
+.heatmap-insights strong { color: var(--text-secondary); font-weight: 500; }
+.heat-scale {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+}
+.heat-scale i {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+@media (max-width: 720px) {
+  .real-chart, .heatmap-wrap { padding: 10px 14px 14px; }
+  .sales-summary-main strong { font-size: 19px; }
+  .sales-modes { margin-left: auto; }
+}

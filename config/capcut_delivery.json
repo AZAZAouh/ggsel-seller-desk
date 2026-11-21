@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "enabled": false,
+  "product_ids": [
+    "104005409",
+    "104005436",
+    "103376334"
+  ],
+  "steps": [
+    {
+      "id": "account",
+      "type": "credentials",
+      "source": "persisted_supplier_delivery"
+    },
+    {
+      "id": "login_email",
+      "type": "text",
+      "text": "На телефоне откройте CapCut и нажмите «Войти». Выберите «Continue with email» («Продолжить с электронной почтой»). Введите почту и пароль из сообщения выше."
+    },
+    {
+      "id": "login_instruction",
+      "type": "text",
+      "text": "Для входа в приложение CapCut на ПК сначала войдите в аккаунт на телефоне. Затем откройте вход по QR-коду на компьютере и отсканируйте код с телефона. Также можно воспользоваться веб-версией CapCut."
+    },
+    {
+      "id": "support_instruction",
+      "type": "text",
+      "text": "Если нужна помощь, напишите в чат заказа слово «АДМИНИСТРАТОР». Я получу уведомление и отвечу вам здесь."
+    },
+    {
+      "id": "review_request",
+      "type": "text",
+      "text": "💙 Буду очень благодарен, если вы оставите отзыв о покупке! ⭐ За каждый оставленный отзыв вы получите купон на скидку, который можно использовать при следующей покупке."
+    }
+  ],
+  "resume_policy": "first_unconfirmed_step_after_reconciliation",
+  "unknown_send_result": "reconcile_chat_before_retry",
+  "support": {
+    "trigger_word": "АДМИНИСТРАТОР",
+    "aliases": [
+      "проблема",
+      "вызвать админа",
+      "позовите админа"
+    ],
+    "case_sensitive": false,
+    "match": "whole_word",
+    "sender": "buyer_only",
+    "deduplication": "buyer_message_id",
+    "notification_fields": [
+      "ggsel_order_id",
+      "product_name",
+      "buyer_message",
+      "chat_url",
+      "delivery_state"
+    ],
+    "include_credentials": false
+  }
+}

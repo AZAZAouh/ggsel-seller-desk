@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>AZAZA — управление магазином GGsel</title>
+  <link rel="stylesheet" href="style.css?v=craft2">
+  <link rel="stylesheet" href="chart.css?v=craft2">
+  <script src="icons.js?v=craft2" defer></script>
+  <script src="reporting.js?v=craft2" defer></script>
+  <script src="sales-chart.js?v=craft2" defer></script>
+  <script src="live.js?v=craft2" defer></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="AZAZA — обзор">
+      <span class="brand-symbol">a<span>z</span></span>
+      <span>AZAZA<small>SELLER SPACE</small></span>
+    </a>
+    <div class="workspace">
+      <span class="store-icon" data-icon="store"></span>
+      <div><strong>Мой магазин</strong><small>GGsel · Seller API</small></div>
+      <span class="status-dot" title="Подключено локально"></span>
+    </div>
+    <div class="nav-label">НАВИГАЦИЯ</div>
+    <nav class="main-nav" aria-label="Основная навигация">
+      <button class="nav-item active" data-page="overview"><i data-icon="grid"></i><span>Обзор</span></button>
+      <button class="nav-item" data-page="orders"><i data-icon="bag"></i><span>Заказы</span><em id="nav-orders-count" hidden></em></button>
+      <button class="nav-item" data-page="products"><i data-icon="box"></i><span>Товары</span><em id="nav-products-count" hidden></em></button>
+      <button class="nav-item" data-page="finance"><i data-icon="chart"></i><span>Финансы</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="profile">
+        <span class="avatar">AZ</span>
+        <div><strong>AZAZA</strong><small>@AZAZAggselbot</small></div>
+        <i data-icon="shield"></i>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div class="breadcrumb">Рабочее пространство <span>/</span> <b id="crumb">Обзор магазина</b></div>
+      <div class="top-actions">
+        <div class="sync-pill"><span class="sync-dot" id="sync-dot"></span><span id="connection" role="status">Загружаем данные…</span></div>
+        <button class="secondary-button" id="refresh"><i data-icon="refresh"></i><span>Обновить из API</span></button>
+        <button class="icon-button" id="notifications" aria-label="Уведомления"><i data-icon="bell"></i></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="heading">
+        <div>
+          <h1 id="page-title">Обзор магазина</h1>
+          <p class="heading-sub" id="page-subtitle">Реальные зачисления, динамика заказов и контроль холда GGsel</p>
+        </div>
+      </section>
+
+      <section id="overview" class="page">
+        <div class="toolbar">
+          <div class="periods" role="group" aria-label="Период">
+            <button data-period="day">День</button>
+            <button data-period="week">Неделя</button>
+            <button data-period="month" class="selected">Месяц</button>
+            <button data-period="year">Год</button>
+            <button data-period="all">Все</button>
+          </div>
+          <div class="toolbar-right">
+            <div class="select-wrap">
+              <select id="product-filter" aria-label="Товар"><option value="all">Все товары</option></select>
+            </div>
+            <div class="currency-pills" id="currency-pills" role="group" aria-label="Валюта">
+              <button data-currency="RUB" class="selected">RUB</button>
+              <button data-currency="USD">USD</button>
+              <button data-currency="EUR">EUR</button>
+            </div>
+            <select id="currency-filter" aria-label="Валюта (скрытый)" hidden><option>USD</option><option selected>RUB</option><option>EUR</option></select>
+          </div>
+        </div>
+
+        <div class="coverage-strip">
+          <p id="coverage" class="notice"></p>
+          <div id="currency-hint" class="currency-hint"></div>
+        </div>
+
+        <div class="metrics" id="real-metrics"></div>
+
+        <div class="analytics-grid">
+          <article class="panel chart-panel">
+            <div class="panel-heading"><h2>Зачисления по дням</h2></div>
+            <div id="real-chart" class="real-chart"></div>
+          </article>
+          <article class="panel balance-card">
+            <div class="panel-heading">
+              <div>
+                <h2>Баланс RoboticVN</h2>
+                <p>Кошелёк поставщика и сводка периода</p>
+              </div>
+              <span class="pill pill--lavender" id="mode-badge">dry_run</span>
+            </div>
+            <div id="real-balance" class="panel-body"></div>
+          </article>
+        </div>
+
+        <div class="insights-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Топ товаров по зачислениям</h2>
+                <p>Доля в выбранной валюте · клик фильтрует обзор</p>
+              </div>
+              <button class="ghost-chip" id="reset-product-filter" hidden>Сбросить фильтр</button>
+            </div>
+            <div id="top-products" class="top-products"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading heatmap-heading">
+              <div>
+                <h2>Активность покупок</h2>
+                <p>Дни недели × часы (Europe/Warsaw)</p>
+              </div>
+              <div class="sales-modes" id="heatmap-modes" role="group" aria-label="Метрика матрицы">
+                <button data-hmode="count" aria-pressed="true">Заказы</button>
+                <button data-hmode="amount" aria-pressed="false">Сумма</button>
+              </div>
+            </div>
+            <div id="activity-heatmap" class="heatmap-wrap"></div>
+          </article>
+        </div>
+
+        <article class="panel hold-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Календарь холда</h2>
+              <p>Распределение средств по подтверждённой дате «Доступно»</p>
+            </div>
+          </div>
+          <details><summary>Загрузить даты из кабинета GGsel</summary>
+            <p>Перетащите ссылку в закладки. В открытом кабинете продавца нажмите закладку, затем выберите скачанный файл здесь.</p>
+            <a id="export-holds" draggable="true">Скачать даты холда GGsel</a>
+            <input id="import-holds" type="file" accept=".json" aria-label="Файл дат холда">
+          </details>
+          <div class="hold-layout">
+            <div>
+              <div class="month-nav">
+                <button id="month-prev" aria-label="Предыдущий месяц">←</button>
+                <h3 id="hold-month"></h3>
+                <button id="month-next" aria-label="Следующий месяц">→</button>
+              </div>
+              <div class="calendar-week"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+              <div id="hold-calendar" class="hold-calendar"></div>
+            </div>
+            <aside class="hold-summary">
+              <h2>Доступность средств</h2>
+              <p id="hold-note"></p>
+              <div id="hold-selection" aria-live="polite"></div>
+            </aside>
+          </div>
+        </article>
+      </section>
+
+      <section id="products" class="page" hidden>
+        <div class="toolbar">
+          <div class="search-box">
+            <i data-icon="search"></i>
+            <input id="product-search" placeholder="Поиск по названию или ID товара…" aria-label="Поиск товара">
+          </div>
+          <span class="notice-inline">Цена продажи — из GGsel · закупка учитывается отдельно</span>
+        </div>
+        <div class="product-detail-grid" id="product-details"></div>
+      </section>
+
+      <section id="orders" class="page" hidden>
+        <div class="toolbar orders-toolbar">
+          <div class="order-chips" id="order-state-chips" role="group" aria-label="Статус заказов"></div>
+          <div class="search-box compact">
+            <i data-icon="search"></i>
+            <input id="order-search" placeholder="№ заказа или товар…" aria-label="Поиск заказа">
+          </div>
+        </div>
+        <div id="all-orders" class="panel orders-panel"></div>
+      </section>
+
+      <section id="finance" class="page" hidden>
+        <div class="finance-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Структура выручки и расходов</h2>
+                <p>По выбранному периоду, товару и валюте в «Обзоре»</p>
+              </div>
+            </div>
+            <div class="panel-body" id="finance-summary"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Расходы на рекламу</h2>
+                <p>Продвижение конкретной карточки товара</p>
+              </div>
+            </div>
+            <form id="ad-form" class="ad-form">
+              <label>Товар<div class="select-wrap full"><select name="product_id" id="ad-product" required></select></div></label>
+              <div class="form-row-3">
+                <label>Сумма<input name="amount" type="number" min="0.01" max="10000000" step="0.01" placeholder="0.00" required></label>
+                <label>Валюта<div class="select-wrap full"><select name="currency"><option>USD</option><option selected>RUB</option><option>EUR</option></select></div></label>
+                <label>Дата<input name="date" type="date" required></label>
+              </div>
+              <button class="primary-button">Сохранить расход</button>
+            </form>
+          </article>
+        </div>
+        <article class="panel">
+          <div class="panel-heading"><h2>Журнал рекламных расходов</h2></div>
+          <div class="panel-body" id="ad-list"></div>
+        </article>
+      </section>
+    </div>
+  </main>
+</div>
+
+<nav class="mobile-nav" aria-label="Мобильная навигация">
+  <button class="active" data-page="overview"><i data-icon="grid"></i><span>Обзор</span></button>
+  <button data-page="orders"><i data-icon="bag"></i><span>Заказы</span></button>
+  <button data-page="products"><i data-icon="box"></i><span>Товары</span></button>
+  <button data-page="finance"><i data-icon="chart"></i><span>Финансы</span></button>
+</nav>
+
+<div id="toast" role="status"></div>
+<dialog id="dialog"><button class="icon-button close-dialog" aria-label="Закрыть">×</button><div id="dialog-content"></div></dialog>
+</body>
+</html>

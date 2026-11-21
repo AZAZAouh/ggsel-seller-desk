@@ -1,0 +1,13 @@
+x-app: &app
+  build: .
+  restart: unless-stopped
+  volumes:
+    - ./.env:/app/.env:ro
+    - ./data:/app/data
+services:
+  bot:
+    <<: *app
+  dashboard:
+    <<: *app
+    command: ["python", "-u", "app_server.py"]
+    network_mode: host

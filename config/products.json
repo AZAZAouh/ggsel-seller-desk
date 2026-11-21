@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "mode": "dry_run",
+  "supplier": "roboticvn",
+  "purchase_currency": "usd",
+  "automatic_substitution": false,
+  "sync_sale_prices": false,
+  "products": [
+    {
+      "ggsel_product_id": "104005409",
+      "label": "CapCut 7 дней",
+      "supplier_product_id": "prod_01KMJ36ZAT64RSNMTFATEKB0X5",
+      "supplier_variant_id": "variant_01M60E6PGWFM88HSH1ZS1X1H1Q",
+      "sync_enabled": true,
+      "delivery_enabled": false,
+      "max_unit_purchase_price": null,
+      "delivery_template": null
+    },
+    {
+      "ggsel_product_id": "104005436",
+      "label": "CapCut 7 дней",
+      "supplier_product_id": "prod_01KMJ36ZAT64RSNMTFATEKB0X5",
+      "supplier_variant_id": "variant_01M60E6PGWFM88HSH1ZS1X1H1Q",
+      "sync_enabled": true,
+      "delivery_enabled": false,
+      "max_unit_purchase_price": null,
+      "delivery_template": null
+    },
+    {
+      "ggsel_product_id": "103376334",
+      "label": "CapCut Personal 1 месяц",
+      "supplier_product_id": "prod_01KMJ36ZAT64RSNMTFATEKB0X5",
+      "supplier_variant_id": "variant_01KSKHJGS2Q8T7VQ7T2K59VGZG",
+      "sync_enabled": true,
+      "delivery_enabled": false,
+      "max_unit_purchase_price": null,
+      "delivery_template": null
+    }
+  ]
+}

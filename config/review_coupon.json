@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "scope": "configured_capcut_products",
+  "trigger": "review_present",
+  "message": "🎉 Ваш купон на скидку: AZAZAOUHCLAUDE\n\nСпасибо за ваш отзыв!\n\nИспользуйте этот купон при следующей покупке и получите скидку. Будем рады видеть вас снова! 💙",
+  "delivery_policy": "one_message_per_order",
+  "unknown_send_result": "reconcile_chat_before_retry",
+  "product_ids": [
+    "104005409",
+    "104005436",
+    "103376334"
+  ],
+  "schedule": {
+    "time": "00:00",
+    "timezone": "Europe/Warsaw",
+    "lookback_days": 7,
+    "order_date_field": "paid_at",
+    "catch_up_after_downtime": true
+  }
+}
